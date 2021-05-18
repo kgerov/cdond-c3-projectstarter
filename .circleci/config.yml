@@ -196,8 +196,8 @@ jobs:
             npm install
             MIGRATION_OUT=$(npm run migrations)
             HAS_MIGRATIONS='has been executed successfully'
-
-            if grep -q "$HAS_MIGRATIONS" <<< "$MIGRATION_OUT"; then
+            
+            if [[ "$MIGRATION_OUT" == *"$HAS_MIGRATIONS"* ]]; then
               curl -H "Content-Type: text/plain" -H "token: d8457bb0-9770-434c-a933-9ac802afe8b0" --request PUT --data "1" https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID:0:7}
             fi
       - revert-migrations:
