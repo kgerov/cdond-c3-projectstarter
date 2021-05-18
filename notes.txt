@@ -1,0 +1,12 @@
+db: udapeople-prod
+username: postgres
+password: udapeople123
+port: 5432
+
+1. Create Random String
+2. Create S3 bucket as per instructions in previous learning
+3. Run Udacity cloudformation script
+
+
+URLS
+1. https://github.com/kgerov/cdond-c3-projectstarter/tree/test-feature-branch
