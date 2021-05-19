@@ -191,9 +191,6 @@ jobs:
           name: Configure server
           command: |
             cat .circleci/ansible/inventory.txt
-            touch /etc/ansible/ansible.cfg
-            echo "[defaults]" > /etc/ansible/ansible.cfg
-            echo "host_key_checking = False" > /etc/ansible/ansible.cfg
             export ANSIBLE_HOST_KEY_CHECKING=False
             ansible-playbook -i .circleci/ansible/inventory.txt .circleci/ansible/configure-server.yml
       - destroy-environment:
