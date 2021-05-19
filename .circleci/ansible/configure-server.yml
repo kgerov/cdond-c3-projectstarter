@@ -19,7 +19,7 @@
     TYPEORM_DATABASE: udapeople-prod
 
   pre_tasks:
-    - name: "wait 4 minute for target connection to become reachable/usable."
+    - name: "wait for target connection to become reachable/usable."
       wait_for_connection:
         delay: 20
         timeout: 60
