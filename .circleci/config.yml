@@ -217,6 +217,7 @@ jobs:
           name: Send migration results to memstash
           command: |
             cd backend
+            cat migrations_output
             if grep -q "has been executed successfully" migrations_output
             then
               echo "Completed migrations!"
@@ -282,6 +283,7 @@ jobs:
           name: Deploy backend
           command: |
             tar -C backend -czvf artifact.tar.gz .
+            export ANSIBLE_HOST_KEY_CHECKING=False
             ansible-playbook -i .circleci/ansible/inventory.txt .circleci/ansible/deploy-backend.yml
       - destroy-environment:
           workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
