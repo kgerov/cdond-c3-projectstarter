@@ -282,9 +282,11 @@ jobs:
       - run:
           name: Deploy backend
           command: |
-            tar -C backend -czvf artifact.tar.gz .
+            tar czf artifact.tar.gz -P /home/circleci/project/backend
+            chmod 644 artifact.tar.gz
+            
             export ANSIBLE_HOST_KEY_CHECKING=False
-            ansible-playbook -i .circleci/ansible/inventory.txt .circleci/ansible/deploy-backend.yml
+            ansible-playbook -i .circleci/ansible/inventory.txt .circleci/ansible/deploy-backend.yml -vvv
       - destroy-environment:
           workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
       - revert-migrations:

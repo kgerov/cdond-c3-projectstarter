@@ -1,41 +1,19 @@
-- name: Copy backend files
-  become: true
-  copy:
+
+- name: "Create directory"
+  become_user: true
+  file:
+    path: ~/udapeople/
+    state: directory
+
+- name: "deploy backend"
+  become_user: true
+  unarchive:
     src: /home/circleci/project/artifact.tar.gz
-    dest: /home/ubuntu/artifact.tar.gz
-    
-- name: "copy backend binaries"
-  become: yes
-  synchronize:
-    src: ../../backend/dist
-    dest: /home/ubuntu/backend
-    recursive: true
+    dest: ~/udapeople/
 
-- name: "copy node_modules"
-  become: yes
-  synchronize:
-    src: ../../backend/node_modules
-    dest: /home/ubuntu/backend
-    recursive: true
-    
-- name: "copy packages"
-  become: yes
-  synchronize:
-    src: ../../backend
-    dest: /home/ubuntu/backend
-    recursive: false
-
-- name: Prepare Env
+- name: "run backend"
+  become_user: true
   shell: |
-    sudo npm i
-    npm i pm2 -g
-    sudo npm i npm@latest -g
-    sudo npm i webpack-dev-server -g
-  args:
-    chdir: /home/ubuntu/backend/dist
-    
-- name: Start PM2
-  become: true
-  command: pm2 start main.js --update-env
-  args:
-    chdir: /home/ubuntu/backend/dist
+    cd ~/udapeople/
+    npm i
+    pm2 start npm -- run start
