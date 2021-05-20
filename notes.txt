@@ -7,6 +7,8 @@ HELP
 - https://knowledge.udacity.com/questions/346683
 - https://knowledge.udacity.com/questions/446310
 
+http://3.94.102.203:3030/api/status
+
 URLS
 1. Github: https://github.com/kgerov/cdond-c3-projectstarter/tree/test-feature-branch
 2. S3 Bucket: https://udapeople-1d90d37.s3.amazonaws.com/index.html#/employees (UPDATE)
