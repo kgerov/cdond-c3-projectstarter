@@ -291,7 +291,6 @@ jobs:
             npm i
             npm run build
             
-            ls -lart
             tar -czvf /etc/artifact.tar.gz ./
             chmod 644 /etc/artifact.tar.gz
             
@@ -335,10 +334,10 @@ jobs:
             echo "Starting backend smoke test"
 
             curl ${API_URL}
-      # - destroy-environment:
-      #     workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
-      # - revert-migrations:
-      #     workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
+      - destroy-environment:
+          workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
+      - revert-migrations:
+          workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
   
   cloudfront-update:
     docker:
@@ -352,10 +351,10 @@ jobs:
       - run:
           name: Update cloudfront distribution
           command: |
-            aws cloudformation deploy \
+            aws cloudformation update-stack \
               --template-file .circleci/files/cloudfront.yml \
-              --stack-name "udapeople-cloudfront" \
-              --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}"
+              --stack-name "production-distro" \
+              --parameters ParameterKey=WorkflowID, ParameterValue=${CIRCLE_WORKFLOW_ID:0:7}, UsePreviousValue=false
       - destroy-environment:
           workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
       - revert-migrations:
