@@ -11,22 +11,6 @@
     src: /etc/artifact.tar.gz
     dest: ~/udapeople/
 
-- name: "install package dependencies"
-  shell: |
-    cd ~/udapeople/
-    ls -la
-    npm install
-
-- name: "build package"
-  shell: |
-    cd ~/udapeople/
-    npm run build
-
-- name: "run migrations again"
-  shell: |
-    cd ~/udapeople/
-    npm run migrations
-
 - name: "run backend"
   become_user: true
   shell: |
