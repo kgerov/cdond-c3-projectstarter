@@ -33,6 +33,7 @@ commands:
             SUCCESS=$(curl -H "token: d8457bb0-9770-434c-a933-9ac802afe8b0" --request GET https://api.memstash.io/values/migration_<< parameters.workflow-id >>)
             if(( $SUCCESS==1 )); 
             then
+              echo "reverting migrations"
               cd ~/project/backend
               npm install
               npm run migrations:revert
