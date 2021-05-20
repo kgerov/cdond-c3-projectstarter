@@ -16,9 +16,9 @@ commands:
           name: Destroy environments
           when: on_fail
           command: |
+            aws s3 rm s3://udapeople-<< parameters.workflow-id >> --recursive
             aws cloudformation delete-stack --stack-name udapeople-backend-<< parameters.workflow-id >>
             aws cloudformation delete-stack --stack-name udapeople-frontend-<< parameters.workflow-id >>
-            aws s3 rm s3://<< pipeline.parameters.bucket_name >> --recursive
   
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
@@ -262,7 +262,7 @@ jobs:
           name: Deploy frontend objects
           command: |
             cd frontend
-            aws s3 cp dist s3://<< pipeline.parameters.bucket_name >> --recursive
+            aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
       - revert-migrations:
           workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
       - destroy-environment:

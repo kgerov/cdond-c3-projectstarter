@@ -3,7 +3,11 @@ username: postgres
 password: udapeople123
 port: 5432
 
+HELP
+- https://knowledge.udacity.com/questions/346683
+- https://knowledge.udacity.com/questions/446310
+
 URLS
 1. https://github.com/kgerov/cdond-c3-projectstarter/tree/test-feature-branch
-
+2. S3 Bucket 
 
