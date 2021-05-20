@@ -282,9 +282,11 @@ jobs:
       - run:
           name: Deploy backend
           command: |
-            tar czf artifact.tar.gz -P /home/circleci/project/backend
-            chmod 644 artifact.tar.gz
-            
+            cd backend
+            tar -czvf /etc/artifact.tar.gz ./
+            chmod 644 /etc/artifact.tar.gz
+            cd ../
+
             export ANSIBLE_HOST_KEY_CHECKING=False
             ansible-playbook -i .circleci/ansible/inventory.txt .circleci/ansible/deploy-backend.yml -vvv
       - destroy-environment:

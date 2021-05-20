@@ -8,7 +8,7 @@
 - name: "deploy backend"
   become_user: true
   unarchive:
-    src: /home/circleci/project/artifact.tar.gz
+    src: /etc/artifact.tar.gz
     dest: ~/udapeople/
 
 - name: "run backend"
