@@ -8,6 +8,8 @@ HELP
 - https://knowledge.udacity.com/questions/446310
 
 URLS
-1. https://github.com/kgerov/cdond-c3-projectstarter/tree/test-feature-branch
+1. Github: https://github.com/kgerov/cdond-c3-projectstarter/tree/test-feature-branch
 2. S3 Bucket: https://udapeople-1d90d37.s3.amazonaws.com/index.html#/employees (UPDATE)
+3. CloudFront distribution:
+4. Back-end server in EC2: 
 
