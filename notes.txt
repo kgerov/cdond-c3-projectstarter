@@ -7,6 +7,9 @@ HELP
 - https://knowledge.udacity.com/questions/346683
 - https://knowledge.udacity.com/questions/446310
 
+Backend issue:
+- https://knowledge.udacity.com/questions/411153
+
 http://3.94.102.203:3030/api/status
 
 URLS

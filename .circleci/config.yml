@@ -69,6 +69,9 @@ jobs:
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
+      - save_cache:
+          paths: [backend/dist]
+          key: backend-dist
   
   test-frontend:
     docker:
@@ -279,9 +282,22 @@ jobs:
             cd /tmp
             apk add --update ansible curl rsync openssh nodejs npm tar gzip
             pip install awscli
+      - restore_cache:
+          keys: ["backend-dist", "backend-build"]
       - run:
           name: Deploy backend
           command: |
+            echo ENVIRONMENT=production > "backend/.env"
+            echo TYPEORM_CONNECTION=$TYPEORM_CONNECTION >> "backend/.env"
+            echo TYPEORM_MIGRATIONS_DIR=$TYPEORM_MIGRATIONS_DIR >> "backend/.env"
+            echo TYPEORM_ENTITIES=$TYPEORM_ENTITIES >> "backend/.env"
+            echo TYPEORM_MIGRATIONS=$TYPEORM_MIGRATIONS >> "backend/.env"
+            echo TYPEORM_HOST=$TYPEORM_HOST >> "backend/.env"
+            echo TYPEORM_PORT=$TYPEORM_PORT >> "backend/.env"
+            echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> "backend/.env"
+            echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> "backend/.env"
+            echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> "backend/.env"
+            
             cd backend
             tar -czvf /etc/artifact.tar.gz ./
             chmod 644 /etc/artifact.tar.gz
@@ -309,6 +325,7 @@ jobs:
           name: Frontend smoke test.
           command: |
             URL="https://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3.amazonaws.com/index.html"
+            echo "${URL}"
 
             if curl -s ${URL} | grep "Welcome"
             then
@@ -323,7 +340,7 @@ jobs:
             export API_URL="http://${BACKEND_IP}:3030/api/status"
             echo "${API_URL}"
 
-            curl -s ${API_URL}
+            curl ${API_URL}
       # - destroy-environment:
       #     workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
       # - revert-migrations:
