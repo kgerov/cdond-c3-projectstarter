@@ -300,14 +300,6 @@ jobs:
             apk add --update ansible curl rsync openssh nodejs npm tar gzip
             pip install awscli
       - run:
-          name: Backend smoke test.
-          command: |
-            BACKEND_IP=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:project,Values=udapeople" --output text)
-            export API_URL="http://${BACKEND_IP}:3030/api/status"
-            echo "${API_URL}"
-
-            curl -s "${API_URL}"
-      - run:
           name: Frontend smoke test.
           command: |
             URL="http://udapeople-${CIRCLE_WORKFLOW_ID}.s3-website-us-east-1.amazonaws.com/index.html"
@@ -318,10 +310,18 @@ jobs:
             else
               return 1
             fi
-      - destroy-environment:
-          workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
-      - revert-migrations:
-          workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
+      - run:
+          name: Backend smoke test.
+          command: |
+            BACKEND_IP=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:project,Values=udapeople" --output text)
+            export API_URL="http://${BACKEND_IP}:3030/api/status"
+            echo "${API_URL}"
+
+            curl -s ${API_URL}
+      # - destroy-environment:
+      #     workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
+      # - revert-migrations:
+      #     workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
   
   cloudfront-update:
     docker:
