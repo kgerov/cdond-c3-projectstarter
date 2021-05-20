@@ -216,7 +216,6 @@ jobs:
           command: |
             cd backend
             npm install
-            npm run build
             npm run migrations > migrations_output
       - run:
           name: Send migration results to memstash
@@ -226,6 +225,9 @@ jobs:
             then
               echo "Completed migrations!"
               curl -H "Content-Type: text/plain" -H "token: d8457bb0-9770-434c-a933-9ac802afe8b0" --request PUT --data "1" https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID:0:7}
+            else
+              echo "Migrations failed!"
+              curl -H "Content-Type: text/plain" -H "token: d8457bb0-9770-434c-a933-9ac802afe8b0" --request PUT --data "0" https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID:0:7}
             fi
       - revert-migrations:
           workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
