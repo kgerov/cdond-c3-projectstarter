@@ -24,6 +24,17 @@ echo NODE_ENV=production > "backend/.env"
             echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> "backend/.env"
             echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> "backend/.env"
 
+aws cloudformation update-stack \
+              --use-previous-template \
+              --stack-name udapeople-cloudfront \
+              --parameters ParameterKey=WorkflowID,ParameterValue=${CIRCLE_WORKFLOW_ID:0:7},UsePreviousValue=false
+
+
+aws cloudformation deploy \
+    --template-file .circleci/files/cloudfront.yml \
+    --stack-name "udapeople-cloudfront" \
+    --parameter-overrides WorkflowID="874595872303"
+
 URLS
 1. Github: https://github.com/kgerov/cdond-c3-projectstarter/tree/test-feature-branch
 2. S3 Bucket: https://udapeople-1d90d37.s3.amazonaws.com/index.html#/employees (UPDATE)
