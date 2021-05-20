@@ -306,7 +306,7 @@ jobs:
             export API_URL="http://${BACKEND_IP}:3030/api/status"
             echo "${API_URL}"
 
-            curl "${API_URL}"
+            curl -s "${API_URL}"
       - run:
           name: Frontend smoke test.
           command: |
@@ -388,7 +388,7 @@ workflows:
           requires: [build-frontend, build-backend]
           filters:
             branches:
-              only: [test-feature-branch]
+              only: [master]
       - configure-infrastructure:
           requires: [deploy-infrastructure]
       - run-migrations:
