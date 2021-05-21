@@ -37,8 +37,8 @@ aws cloudformation deploy \
 
 URLS
 1. Github: https://github.com/kgerov/cdond-c3-projectstarter/tree/test-feature-branch
-2. S3 Bucket: https://udapeople-1d90d37.s3.amazonaws.com/index.html#/employees (UPDATE)
-3. CloudFront distribution:
-4. Back-end server in EC2: 
-5. Prometheus: http://ec2-54-235-30-234.compute-1.amazonaws.com:9090/
+2. S3 Bucket: https://udapeople-71d5229.s3.amazonaws.com/index.html#/employees
+3. CloudFront distribution: http://d1m9h33co1rpca.cloudfront.net/#/employees
+4. Back-end server in EC2: http://54.173.199.220:3030/api/status
+5. Prometheus: http://ec2-18-212-93-198.compute-1.amazonaws.com:9090/
 
