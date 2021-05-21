@@ -24,12 +24,13 @@ echo NODE_ENV=production > "backend/.env"
             echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> "backend/.env"
             echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> "backend/.env"
 
+Alternative green-blue deployment strategy
 aws cloudformation update-stack \
               --use-previous-template \
               --stack-name udapeople-cloudfront \
               --parameters ParameterKey=WorkflowID,ParameterValue=${CIRCLE_WORKFLOW_ID:0:7},UsePreviousValue=false
 
-
+Upload frist S3 bucket
 aws cloudformation deploy \
     --template-file .circleci/files/cloudfront.yml \
     --stack-name "udapeople-cloudfront" \
